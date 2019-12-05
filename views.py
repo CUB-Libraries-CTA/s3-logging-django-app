@@ -18,7 +18,7 @@ class LogView(APIView):
         loggingType = request.data.get('type')
         message = request.data.get('message')
 
-        now = date.now()
+        now = datetime.now()
         current_date = now.strftime("%Y:%m:%d")
         s3 = boto3.resource('s3')
         s3.Object('cubl-room-booking-log', current_date).put(Body=message)

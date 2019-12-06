@@ -2,14 +2,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 import json
-import os
 import requests
 from .permission import IsAdmin
 import boto3
 from datetime import datetime
 from botocore.exceptions import ClientError
 import logging
-import os.path
 
 
 class LogView(APIView):
@@ -21,14 +19,11 @@ class LogView(APIView):
         message = request.data.get('message')
         now = datetime.now()
         current_date = now.strftime("%Y-%m-%d")
-        path = os.path.join("logs", "room-booking")
-        file = os.path.join(path, "log-" + current_date + '.csv')
-
         try:
-            f = open(file, "a+")
+            f = open("logs/room-booking/log-" + current_date + '.csv', "a+")
             f.write(message + "\n")
-        except FileNotFoundError:
-            f = open(file, "w+")
+        except IOError:
+            f = open("logs/room-booking/log-" + current_date + '.csv', "w+")
             f.write(message + "\n")
         finally:
             f.close()

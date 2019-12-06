@@ -12,7 +12,6 @@ import logging
 
 
 class LogView(APIView):
-    # permission_classes = (IsAuthenticated, IsAdmin)
     http_method_names = ['post']
 
     def post(self, request):
@@ -21,6 +20,7 @@ class LogView(APIView):
         message = request.data.get('message')
         now = datetime.now()
         current_date = now.strftime("%Y-%m-%d")
+        f = None
         try:
             f = open("logs/room-booking/log-" + current_date + '.csv', "a+")
             f.write(message + "\n")

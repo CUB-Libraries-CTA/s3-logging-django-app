@@ -21,8 +21,9 @@ class LogView(APIView):
         message = request.data.get('message')
         now = datetime.now()
         current_date = now.strftime("%Y-%m-%d")
-        f = open(os.path.join(
-            BASE_DIR, 'logs/room-booking/log-' + current_date + '.csv'), "a+")
+        filePath = os.path.join(
+            BASE_DIR, 'logs/room-booking/log-' + current_date + '.csv')
+        f = open(filePath, "a+")
         f.write(message + "\n")
         f.close()
 
@@ -30,7 +31,7 @@ class LogView(APIView):
         s3_client = boto3.client('s3')
         try:
             response = s3_client.upload_file(
-                "log-" + current_date + '.csv', 'cubl-room-booking-log', "log-" + current_date + '.csv')
+                filePath, 'cubl-room-booking-log', "log-" + current_date + '.csv')
         except ClientError as e:
             logging.error(e)
             return False

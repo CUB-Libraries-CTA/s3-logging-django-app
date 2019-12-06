@@ -9,6 +9,7 @@ import boto3
 from datetime import datetime
 from botocore.exceptions import ClientError
 import logging
+import os.path
 
 
 class LogView(APIView):
@@ -20,11 +21,14 @@ class LogView(APIView):
         message = request.data.get('message')
         now = datetime.now()
         current_date = now.strftime("%Y-%m-%d")
+        path = os.path.join("logs", "room-booking")
+        file = os.path.join(path, "log-" + current_date + '.csv')
+
         try:
-            f = open("/logs/room-booking/log-" + current_date + '.csv', "a+")
+            f = open(file, "a+")
             f.write(message + "\n")
         except FileNotFoundError:
-            f = open("/logs/room-booking/log-" + current_date + '.csv', "w+")
+            f = open(file, "w+")
             f.write(message + "\n")
         finally:
             f.close()

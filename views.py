@@ -8,6 +8,8 @@ import boto3
 from datetime import datetime
 from botocore.exceptions import ClientError
 import logging
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 class LogView(APIView):
@@ -20,10 +22,13 @@ class LogView(APIView):
         now = datetime.now()
         current_date = now.strftime("%Y-%m-%d")
         try:
-            f = open("logs/room-booking/log-" + current_date + '.csv', "a+")
+
+            f = open(os.path.join(
+                BASE_DIR, '/app/logs/room-booking/log-' + current_date + '.csv', "a+"))
             f.write(message + "\n")
         except IOError:
-            f = open("logs/room-booking/log-" + current_date + '.csv', "w+")
+            f = open(os.path.join(
+                BASE_DIR, '/app/logs/room-booking/log-' + current_date + '.csv', "w+"))
             f.write(message + "\n")
         finally:
             f.close()

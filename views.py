@@ -24,11 +24,11 @@ class LogView(APIView):
         try:
 
             f = open(os.path.join(
-                BASE_DIR, '/app/logs/room-booking/log-' + current_date + '.csv', "a+"))
+                BASE_DIR, '/app/logs/room-booking/log-' + current_date + '.csv'), "a+")
             f.write(message + "\n")
         except IOError:
             f = open(os.path.join(
-                BASE_DIR, '/app/logs/room-booking/log-' + current_date + '.csv', "w+"))
+                BASE_DIR, '/app/logs/room-booking/log-' + current_date + '.csv'), "w+")
             f.write(message + "\n")
         finally:
             f.close()

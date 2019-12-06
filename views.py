@@ -35,4 +35,4 @@ class LogView(APIView):
         except ClientError as e:
             logging.error(e)
             return False
-        return True
+        return Response()

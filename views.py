@@ -21,12 +21,11 @@ class LogView(APIView):
         message = request.data.get('message')
         now = datetime.now()
         current_date = now.strftime("%Y-%m-%d")
-        path = 'logs/room-booking/'
         try:
-            f = open(path + "log-" + current_date + '.csv', "a+")
+            f = open("logs/room-booking/log-" + current_date + '.csv', "a+")
             f.write(message + "\n")
         except IOError:
-            f = open(path + "log-" + current_date + '.csv', "w+")
+            f = open("logs/room-booking/log-" + current_date + '.csv', "w+")
             f.write(message + "\n")
         finally:
             f.close()

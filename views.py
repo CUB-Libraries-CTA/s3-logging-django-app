@@ -22,7 +22,7 @@ class LogView(APIView):
         now = datetime.now()
         current_date = now.strftime("%Y-%m-%d")
         f = open(os.path.join(
-            BASE_DIR, 'app/logs/room-booking/log-' + current_date + '.csv'), "a+")
+            BASE_DIR, 'logs/room-booking/log-' + current_date + '.csv'), "a+")
         f.write(message + "\n")
         f.close()
 

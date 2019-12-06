@@ -21,10 +21,19 @@ class LogView(APIView):
         message = request.data.get('message')
         now = datetime.now()
         current_date = now.strftime("%Y-%m-%d")
-        f = open(os.path.join(
-            BASE_DIR, '/app/logs/room-booking/log-' + current_date + '.csv'), "a+")
-        f.write(message + "\n")
-        f.close()
+        # f = open(os.path.join(
+        #     BASE_DIR, '/app/logs/room-booking/log-' + current_date + '.csv'), "a+")
+        # f.write(message + "\n")
+        # f.close()
+        file = os.path.join(
+            BASE_DIR, '/app/logs/room-booking/log-' + current_date + '.csv')
+        check = os.path.isfile(file)
+
+        with open(file, "a+") as f:
+            if not check:
+                f.write(message + "\n")
+            else:
+                f.write(message + "\n")
 
         # Upload the file
         s3_client = boto3.client('s3')

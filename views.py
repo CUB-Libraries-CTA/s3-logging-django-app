@@ -31,7 +31,7 @@ class LogView(APIView):
         s3_client = boto3.client('s3')
         try:
             response = s3_client.upload_file(
-                filePath, 'cubl-logs', "room-booking/" + current_date + '.csv')
+                filePath, 'cubl-log', "room-booking/" + current_date + '.csv')
         except ClientError as e:
             logging.error(e)
             return False

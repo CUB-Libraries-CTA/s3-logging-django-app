@@ -4,9 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 import json
 import requests
 from .permission import IsAdmin
-import boto3
 from datetime import datetime
-from botocore.exceptions import ClientError
 import logging
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,13 +24,4 @@ class LogView(APIView):
         f = open(filePath, "a+")
         f.write(message + "\n")
         f.close()
-
-        # Upload the file
-        s3_client = boto3.client('s3')
-        try:
-            response = s3_client.upload_file(
-                filePath, 'cubl-log', "room-booking/" + current_date + '.csv')
-        except ClientError as e:
-            logging.error(e)
-            return False
-        return Response()
+        return 'success'

@@ -24,4 +24,4 @@ class LogView(APIView):
         f = open(filePath, "a+")
         f.write(message + "\n")
         f.close()
-        return Response
+        return Response({'message': 'success'}, status=status.HTTP_200_OK)
